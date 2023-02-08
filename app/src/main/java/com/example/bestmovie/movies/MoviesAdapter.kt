@@ -32,7 +32,6 @@ class MoviesAdapter( var list: ArrayList<Result>?):RecyclerView.Adapter<MoviesAd
         holder.moviename.text=data?.original_title
         Picasso.get().load("https://image.tmdb.org/t/p/w500" + data?.backdrop_path).into(holder.imgmoview)
         holder.rate.setText(""+data?.vote_average)
-        holder.getfavor()
         holder.setfavorite()
 
     }
@@ -49,17 +48,8 @@ class MoviesAdapter( var list: ArrayList<Result>?):RecyclerView.Adapter<MoviesAd
             itemview.resources,
             R.drawable.ic_favorite_filled, null
         )
-        private val icFavoriteBorderedImage = ResourcesCompat.getDrawable(
-            itemview.resources,
-            R.drawable.ic_favorite_bordered, null
-        )
-        fun getfavor() {
-            img_favor.setOnClickListener(this)
-        }
 
- // make Favorite filled if item in Room Database
         fun setfavorite() {
-            var s: Int = 0
             val data: com.example.bestmovie.pojo.Result
             data = list!!.get(adapterPosition)
             val database: DatabaseFavorite? = DatabaseFavorite.getInstance(itemView.context)
@@ -80,7 +70,7 @@ class MoviesAdapter( var list: ArrayList<Result>?):RecyclerView.Adapter<MoviesAd
 
         }
 
-//Add To Room Database
+//Insert To Room Database
         override fun onClick(p0: View?) {
             val obj: Result
             obj = list!!.get(adapterPosition)
@@ -92,7 +82,6 @@ class MoviesAdapter( var list: ArrayList<Result>?):RecyclerView.Adapter<MoviesAd
                         ?.subscribeOn(Schedulers.io())?.subscribe(object : CompletableObserver {
                             override fun onSubscribe(d: Disposable) {}
                             override fun onComplete() {
-                                println("complete")
 
                             }
 
@@ -104,8 +93,7 @@ class MoviesAdapter( var list: ArrayList<Result>?):RecyclerView.Adapter<MoviesAd
                     img_favor.setImageDrawable(icFavoriteFilledImage)
                 }
     else {
-               var intent:Intent
-               intent= Intent(p0.context,DetailsMovie::class.java)
+                var intent:Intent = Intent(p0.context,DetailsMovie::class.java)
                 intent.putExtra("img",obj.poster_path)
                 intent.putExtra("name",obj.original_title)
                 intent.putExtra("overview",obj.overview)
