@@ -4,7 +4,7 @@ data class Root( var page:Int,
                  var results: ArrayList<Result> ,
                  var total_pages:Int,
                  var total_results:Int) {
-    fun getResults(): List<com.example.bestmovie.pojo.Result?>? {
+    fun getResults(): List<Result?>? {
         return results
     }
 }

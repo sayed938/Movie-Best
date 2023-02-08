@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bestmovie.R
 import com.example.bestmovie.Room.DatabaseFavorite
 import com.example.bestmovie.Room.MoviesModelBase
+import com.example.bestmovie.Room.RoomOperations
 import com.squareup.picasso.Picasso
 import io.reactivex.CompletableObserver
 import io.reactivex.disposables.Disposable
@@ -21,76 +22,39 @@ class FavoriteAdapter():RecyclerView.Adapter<FavoriteAdapter.viewholder> () {
             LayoutInflater.from(parent.context).inflate(R.layout.item_list_favorite, parent, false)
         return viewholder(view)
     }
-
     override fun onBindViewHolder(holder: FavoriteAdapter.viewholder, position: Int) {
         val data = list[position]
         holder.namemovie.text = data?.name
         holder.datemovie.text = data?.date
-        holder.deletefavorit()
-        holder.postposition(position)
+        holder.imgdelete.setOnClickListener{
+            holder.deleteMovie()
+        }
         Picasso.get().load("https://image.tmdb.org/t/p/w500" + data?.img).into(holder.imgfavorite)
     }
-
     override fun getItemCount(): Int {
         return list!!.size
     }
-
     @JvmName("setList1")
     fun setList(listt: List<MoviesModelBase?>) {
         list = listt as ArrayList<MoviesModelBase>
         notifyDataSetChanged()
     }
-
-    inner class viewholder(itemview: View) : RecyclerView.ViewHolder(itemview),
-        View.OnClickListener {
-        var imgfavorite=itemview.findViewById<ImageView>(R.id.imgfavor)
-        var datemovie = itemview.findViewById<TextView>(R.id.favoritemoviedate)
-        var namemovie = itemview.findViewById<TextView>(R.id.favoritemovie)
-        var imgdelete = itemview.findViewById<ImageView>(R.id.delete)
-        var currentPos: Int = -1
-
-        fun postposition(position: Int) {
-            this.currentPos = position
-        }
-
-        fun deletefavorit() {
-            imgdelete.setOnClickListener(this)
-        }
-
-        override fun onClick(p0: View?) {
-            if (p0!!.id == R.id.delete) {
-               deleteeitem()
-            } else println("noooo")
-        }
-
-        ////////////Delete From Recycler//////////////
-        fun deleteeitem() {
-            val objmodel: MoviesModelBase
-            objmodel = list.get(adapterPosition)
-            deletefromRoom(objmodel.idd)
+    inner class viewholder(itemview: View) : RecyclerView.ViewHolder(itemview)
+        {
+        var imgfavorite=itemview.findViewById(R.id.imgfavor)as ImageView
+        var datemovie = itemview.findViewById(R.id.favoritemoviedate)as TextView
+        var namemovie = itemview.findViewById(R.id.favoritemovie)as TextView
+        var imgdelete = itemview.findViewById(R.id.delete)as ImageView
+        fun deleteMovie() {
+            deletefromRoom()
             list.removeAt(adapterPosition)
             notifyItemRemoved(adapterPosition)
             notifyItemRangeChanged(adapterPosition, list.size)
-
         }
-
-        ////////////Delete From Room Database///////////
-        fun deletefromRoom(id:Int){
-            var dataaabase = DatabaseFavorite.getInstance(itemView.context)
-            dataaabase?.dao()?.delete(id)?.subscribeOn(Schedulers.computation())
-                ?.subscribe(object : CompletableObserver {
-                    override fun onSubscribe(d: Disposable) {
-
-                    }
-
-                    override fun onComplete() {
-                    }
-
-                    override fun onError(e: Throwable) {
-
-                    }
-
-                })
+        private fun deletefromRoom(){
+            val obj: MoviesModelBase= list[adapterPosition]
+           val operate=RoomOperations(obj.idd,obj.name,obj.date,obj.img,itemView.context)
+            operate.deleteMovie()
         }
     }
 }

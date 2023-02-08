@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bestmovie.R
 import com.example.bestmovie.Room.DatabaseFavorite
 import com.example.bestmovie.Room.MoviesModelBase
+import com.example.bestmovie.Room.RoomOperations
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -36,24 +37,21 @@ class FavoriteFragment : Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recycler!!.setHasFixedSize(true)
         recycler?.adapter=adapter_favorite
+        getData(view)
+
+    }
+    fun getData(view : View){
         val databasee: DatabaseFavorite? = DatabaseFavorite.getInstance(view.context)
         databasee?.dao()?.getdata()?.subscribeOn(Schedulers.computation())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe(object : SingleObserver<List<MoviesModelBase?>?> {
                 override fun onSubscribe(d: Disposable) {}
                 override fun onSuccess(t: List<MoviesModelBase?>) {
-                      adapter_favorite?.setList(t)
-                      adapter_favorite?.notifyDataSetChanged()
-                      println(t.size)
-
+                    adapter_favorite?.setList(t)
+                    adapter_favorite?.notifyDataSetChanged()
                 }
-
-                override fun onError(e: Throwable) {
-
-                    println(e.message)
-                }
+                override fun onError(e: Throwable) {}
             })
-
     }
 
 

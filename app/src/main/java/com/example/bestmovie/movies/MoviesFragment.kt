@@ -33,8 +33,8 @@ class BlankFragment : Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recyclerView!!.setHasFixedSize(true)
         viewmodel = ViewModelProviders.of(this)[ViewModel::class.java]
-        viewmodel?.getmoviedata()
-        viewmodel?.mutableLiveData?.observe(viewLifecycleOwner, Observer { movieList ->
+        viewmodel?.getMovieToprated()
+        viewmodel?.liveDataToprated?.observe(viewLifecycleOwner, Observer { movieList ->
             movieAdapter = MoviesAdapter(movieList as ArrayList<Result>?)
             recyclerView?.adapter = movieAdapter
         })

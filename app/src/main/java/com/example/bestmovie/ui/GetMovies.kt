@@ -7,7 +7,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 
-interface MovieInfac {
+interface GetMovies {
 @GET("3/movie/{sort}")
 open fun getMovie(@Path("sort") sort: String?, @Query("api_key") api_key: String?): Call<Root>?
 

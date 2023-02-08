@@ -13,7 +13,7 @@ abstract class DatabaseFavorite: RoomDatabase() {
         private var instance: DatabaseFavorite? = null
 
         @Synchronized
-        fun getInstance(context: Context?): DatabaseFavorite? {
+        fun getInstance(context: Context): DatabaseFavorite? {
             if (instance == null) {
                 instance = Room.databaseBuilder(
                     context!!,
