@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bestmovie.R
 import com.example.bestmovie.Room.DatabaseFavorite
 import com.example.bestmovie.Room.MoviesModelBase
-import com.example.bestmovie.Room.RoomOperations
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -26,7 +25,7 @@ class FavoriteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favoitemovies, container, false)
+        return inflater.inflate(R.layout.favorite_movies, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
