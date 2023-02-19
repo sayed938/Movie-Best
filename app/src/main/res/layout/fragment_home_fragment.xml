@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_color"
+    tools:context=".ui.fragments.Home_Fragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_images_person"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        tools:listitem="@layout/image_person_custom" />
+
+    <Button
+        android:id="@+id/popular_bt"
+        android:layout_width="110dp"
+        android:layout_height="65dp"
+        android:layout_gravity="center|left"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="33dp"
+        android:text="Popular"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/toprated_bt"
+        android:layout_width="110dp"
+        android:layout_height="65dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="33dp"
+        android:text="Top rated"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/upcoming_bt"
+        android:layout_width="110dp"
+        android:layout_height="65dp"
+        android:layout_gravity="center|right"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="33dp"
+        android:text="Upcoming"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="213dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/nav_host_movies"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:navGraph="@navigation/nav_graph_movies" />
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

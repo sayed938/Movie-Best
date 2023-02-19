@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_color"
     tools:context=".ui.MainActivity">
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="0dp"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintBottom_toTopOf="@+id/bottom_nav_view"
+    app:layout_constraintBottom_toTopOf="@+id/bottom_nav_view_home"
     app:layout_constraintStart_toStartOf="parent"
 
     app:layout_constraintTop_toTopOf="parent"
@@ -39,18 +40,15 @@
         app:navGraph="@navigation/nav_cust" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_nav_view"
+        android:id="@+id/bottom_nav_view_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/bottonnavigation"
+        android:background="@color/main_color"
         app:layout_constraintStart_toStartOf="parent"
         app:itemIconTint="@color/menu_color"
-        app:itemTextColor="@color/black"
-        app:menu="@menu/menumovies" >
-
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
-
+        app:itemTextColor="@color/menu_color"
+        app:menu="@menu/menu_home" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

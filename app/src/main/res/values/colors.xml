@@ -8,8 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="back">#5D3E88</color>
-    <color name="purple_501">#0C1A3C</color>
+    <color name="main_color">#242A32</color>
     <color name="purple_502">#23345E</color>
     <color name="bottonnavigation">#2C3C63</color>
     <color name="red">#C11010</color>
+    <color name="card_movie">#313943</color>
+    <color name="text_clicked">#0296E5</color>
 </resources>
