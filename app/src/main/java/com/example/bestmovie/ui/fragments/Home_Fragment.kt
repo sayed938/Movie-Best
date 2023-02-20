@@ -18,6 +18,7 @@ import com.example.bestmovie.movies.PopularFragment
 import com.example.bestmovie.movies.top_rated.TopRatedFragment
 import com.example.bestmovie.movies.upcoming.UpcomingFragment
 import com.example.bestmovie.pojo.Result
+import com.example.bestmovie.pojo.TrendingPerson
 import com.example.bestmovie.ui.ViewModel
 import com.google.android.material.navigation.NavigationBarView
 
@@ -41,6 +42,8 @@ class Home_Fragment : Fragment() {
     @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        view.findViewById<Button>(com.example.bestmovie.R.id.popular_bt)
+            .setTextColor(Color.parseColor("#0296E5"))
         setColor(view)
         recycler_trending = view.findViewById(com.example.bestmovie.R.id.recycler_images_person)
         recycler_trending.layoutManager =
@@ -53,7 +56,7 @@ class Home_Fragment : Fragment() {
     private fun getTrending() {
         viewModel.getMovieTrending()
         viewModel.liveDataMovietrending?.observe(viewLifecycleOwner, Observer { trendingList ->
-            trending_adapter = HomeAdapter(trendingList as ArrayList<Result>)
+            trending_adapter = HomeAdapter(trendingList as ArrayList<TrendingPerson.Result>)
             recycler_trending.adapter = trending_adapter
         })
     }

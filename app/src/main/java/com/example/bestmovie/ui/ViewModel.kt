@@ -6,41 +6,44 @@ import com.example.bestmovie.ProjectData
 import androidx.lifecycle.MutableLiveData
 import com.example.bestmovie.pojo.PopularTVModel
 import com.example.bestmovie.pojo.Result
+import com.example.bestmovie.pojo.TrendingPerson
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class ViewModel : androidx.lifecycle.ViewModel() {
-    val liveDataMoviepopular: MutableLiveData<List<Result>> =
+    val liveDataMovie: MutableLiveData<List<Result>> =
         MutableLiveData<List<Result>>()
-    val liveDataMovietrending: MutableLiveData<List<Result>> =
-        MutableLiveData<List<Result>>()
-    val liveDataTvpopular: MutableLiveData<List<PopularTVModel.ResultTVPopular>> =
+    val liveDataMovietrending: MutableLiveData<List<TrendingPerson.Result>> =
+        MutableLiveData<List<TrendingPerson.Result>>()
+    val liveDataTv: MutableLiveData<List<PopularTVModel.ResultTVPopular>> =
         MutableLiveData<List<PopularTVModel.ResultTVPopular>>()
 
     @SuppressLint("CheckResult")
-    fun getMoviePopular() {
+    fun getMovie(path: String) {
         val observable =
-            RetrofitBuilder().interfaceObj().getMovie("movie/popular", ProjectData().api_key)
+            RetrofitBuilder().interfaceObj().getMovie("movie/" + path, ProjectData().api_key)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-        observable.subscribe { o -> liveDataMoviepopular.setValue(o.results) }
+        observable.subscribe { o ->
+            liveDataMovie.setValue(o.results)
+
+        }
     }
 
-
     @SuppressLint("CheckResult")
-    fun getTVPopular() {
+    fun getTV(path: String) {
         val observable =
-            RetrofitBuilder().interfaceObj().getTv("popular", ProjectData().api_key)
+            RetrofitBuilder().interfaceObj().getTv("3/"+path, ProjectData().api_key)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
 
-        observable.subscribe { o -> liveDataTvpopular.setValue(o.results) }
+        observable.subscribe { o -> liveDataTv.setValue(o.results) }
     }
 
     @SuppressLint("CheckResult")
     fun getMovieTrending() {
         val observable =
-            RetrofitBuilder().interfaceObj().getMovie("trending/all/day", ProjectData().api_key)
+            RetrofitBuilder().interfaceObj().getTrendingPerson("trending/person/day", ProjectData().api_key)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
         observable.subscribe { o -> liveDataMovietrending.setValue(o.results) }

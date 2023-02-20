@@ -1,4 +1,4 @@
-package com.example.bestmovie.movies.popular
+package com.example.bestmovie.movies
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -13,15 +13,14 @@ import com.example.bestmovie.Room.DatabaseFavorite
 import com.example.bestmovie.Room.MoviesModelBase
 import com.example.bestmovie.Room.RoomOperations
 import com.example.bestmovie.pojo.PopularTVModel
-import com.example.bestmovie.pojo.Result
 import com.squareup.picasso.Picasso
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class PopularTVAdapter(var tvList: ArrayList<PopularTVModel.ResultTVPopular>) :
-    RecyclerView.Adapter<PopularTVAdapter.ViewHolder>() {
+class TVAdapter(var tvList: ArrayList<PopularTVModel.ResultTVPopular>) :
+    RecyclerView.Adapter<TVAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_list_movies, parent, false)

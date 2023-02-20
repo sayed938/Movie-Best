@@ -10,18 +10,16 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bestmovie.R
-import com.example.bestmovie.movies.popular.PopularMoviesAdapter
-import com.example.bestmovie.movies.popular.PopularTVAdapter
 import com.example.bestmovie.pojo.PopularTVModel
 import com.example.bestmovie.pojo.Result
 import com.example.bestmovie.ui.ViewModel
 
 class PopularFragment : Fragment() {
-    private var movieAdapter: PopularMoviesAdapter? = null
-    private var recyclerMovie: RecyclerView? = null
-    private var recyclerTV: RecyclerView? = null
-    private var viewmodel: ViewModel? = null
-    private var tvAdapter: PopularTVAdapter? = null
+    private lateinit var movieAdapter: MoviesAdapter
+    private lateinit var recyclerMovie: RecyclerView
+    private lateinit var recyclerTV: RecyclerView
+    private lateinit var viewmodel: ViewModel
+    private lateinit var tvAdapter: TVAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,32 +32,32 @@ class PopularFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerMovie = view.findViewById(R.id.recycler_popular_movie)
         recyclerTV = view.findViewById(R.id.recycler_popular_tv)
-        recyclerMovie!!.layoutManager =
+        recyclerMovie.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recyclerMovie!!.setHasFixedSize(true)
-        recyclerTV!!.layoutManager =
+        recyclerMovie.setHasFixedSize(true)
+        recyclerTV.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recyclerTV!!.setHasFixedSize(true)
+        recyclerTV.setHasFixedSize(true)
         viewmodel = ViewModelProviders.of(this)[ViewModel::class.java]
-        getTV()
-        getMovies()
+        getTV(recyclerTV)
+        getMovies(recyclerMovie)
 
     }
 
-    private fun getMovies() {
-        viewmodel?.getMoviePopular()
-        viewmodel?.liveDataMoviepopular?.observe(viewLifecycleOwner, Observer { movieList ->
-            movieAdapter = PopularMoviesAdapter(movieList as ArrayList<Result>?)
-            recyclerMovie?.adapter = movieAdapter
+     fun getMovies(recyclerView: RecyclerView) {
+        viewmodel.getMovie("popular")
+        viewmodel.liveDataMovie.observe(viewLifecycleOwner, Observer { movieList ->
+            movieAdapter = MoviesAdapter(movieList as ArrayList<Result>?)
+            recyclerView.adapter = movieAdapter
         })
     }
 
-    private fun getTV() {
-        viewmodel?.getTVPopular()
-        viewmodel?.liveDataTvpopular?.observe(viewLifecycleOwner, Observer { tvlist ->
-            tvAdapter = PopularTVAdapter(tvlist as ArrayList<PopularTVModel.ResultTVPopular>)
-            recyclerTV?.adapter = tvAdapter
-            println(tvlist[0].first_air_date)
+     fun getTV(recyclerView: RecyclerView) {
+        viewmodel.getTV("tv/popular")
+        viewmodel.liveDataTv.observe(viewLifecycleOwner, Observer { tvlist ->
+            tvAdapter = TVAdapter(tvlist as ArrayList<PopularTVModel.ResultTVPopular>)
+            recyclerView.adapter = tvAdapter
+
         })
     }
 }
