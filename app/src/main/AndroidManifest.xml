@@ -15,7 +15,7 @@
         android:theme="@style/Theme.BestMovie"
         tools:targetApi="31">
         <activity
-            android:name=".ui.DetailsMovie"
+            android:name=".ui.detail.DetailsMovie"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

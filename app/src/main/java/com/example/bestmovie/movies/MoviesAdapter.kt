@@ -1,7 +1,8 @@
-package com.example.bestmovie.movies.popular
+package com.example.bestmovie.movies
 
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.example.bestmovie.Room.DatabaseFavorite
 import com.example.bestmovie.Room.MoviesModelBase
 import com.example.bestmovie.Room.RoomOperations
 import com.example.bestmovie.pojo.Result
+import com.example.bestmovie.ui.detail.DetailsMovie
 import com.squareup.picasso.Picasso
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,24 +23,32 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 
-class PopularMoviesAdapter(var list: ArrayList<Result>?) :
-    RecyclerView.Adapter<PopularMoviesAdapter.viewHolder>() {
+class MoviesAdapter(var list: ArrayList<Result>?) :
+    RecyclerView.Adapter<MoviesAdapter.viewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_list_movies, parent, false)
         return viewHolder(view)
     }
-
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
-        val data = list?.get(position)
-        holder.moviename.text = data?.original_title
-        Picasso.get().load(ProjectData().imageSource + data?.backdrop_path)
+        val data = list!![position]
+        holder.moviename.text = data.original_title
+        Picasso.get().load(ProjectData().imageSource + data.backdrop_path)
             .into(holder.imgmoview)
         holder.stillFavorite()
-
+        holder.imgmoview.setOnClickListener {
+            holder.Clicked(
+                data.title,
+                data.vote_average,
+                data.release_date,
+                data.overview,
+                data.poster_path,
+                data.backdrop_path
+            )
+        }
         holder.imgfavor.setOnClickListener {
             val operate = RoomOperations(
-                data!!.id, data.original_title, data.release_date,
+                data.id, data.original_title, data.release_date,
                 data.poster_path, holder.context()
             )
             operate.insertMovie()
@@ -76,6 +86,24 @@ class PopularMoviesAdapter(var list: ArrayList<Result>?) :
                     override fun onError(e: Throwable) {
                     }
                 })
+        }
+
+        fun Clicked(
+            name: String,
+            rate: Double,
+            date: String,
+            details: String,
+            profile: String,
+            img_detail: String
+        ) {
+            var i = Intent(itemView.context, DetailsMovie::class.java)
+            i.putExtra("name", name)
+            i.putExtra("rate", rate)
+            i.putExtra("date", date)
+            i.putExtra("details", details)
+            i.putExtra("details_img", img_detail)
+            i.putExtra("profile", profile)
+            itemView.context.startActivity(i)
         }
     }
 }

@@ -7,9 +7,10 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bestmovie.ProjectData
 import com.example.bestmovie.R
+import com.example.bestmovie.pojo.TrendingPerson
 import com.squareup.picasso.Picasso
 
-class HomeAdapter(var trending: ArrayList<com.example.bestmovie.pojo.Result>) :
+class HomeAdapter(var trending: ArrayList<TrendingPerson.Result>) :
     RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -20,7 +21,7 @@ class HomeAdapter(var trending: ArrayList<com.example.bestmovie.pojo.Result>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = trending.get(position)
-        Picasso.get().load(ProjectData().imageSource+data.poster_path).into(holder.trend_img)
+        Picasso.get().load(ProjectData().imageSource+data.profile_path).into(holder.trend_img)
     }
 
     override fun getItemCount(): Int {
